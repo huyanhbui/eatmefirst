@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title> </title>
+
+    <!-- Font Icon -->
+    <link rel="stylesheet" href="loginandsignup/fonts/material-icon/css/material-design-iconic-font.css">
+
+    <!-- Main css -->
+    <link rel="stylesheet" href="loginandsignup/css/style.css">
+
+    <!-- Entrance animations (matches the rest of the site) -->
+    <link rel="stylesheet" href="css/auth-anim.css">
+</head>
+<body>
+
+    <div class="main">
+        
+        <section class="signup">
+            
+           
+            <div class="container">
+                
+                <div class="signup-content">
+                    <form method="POST" id="signup-form" class="signup-form">
+                        <h2 class="form-title">welcome back!</h2>
+                        
+                        <div class="form-group">
+                            <input type="email" class="form-input" name="email" id="emaill" placeholder="Your Email"/>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-input" name="password" id="passwordd" placeholder="Password"/>
+                            <span toggle="#password" class="zmdi zmdi-eye field-icon toggle-password"></span>
+                        </div>
+                        
+                        
+                        <div class="form-group">
+                            <input type="submit" name="submit" id="submitt" class="form-submit" value="Sign in "/>
+                        </div>
+                    </form>
+                    <p class="loginhere">
+                        don't have an account ? <a href="signup.html" class="loginhere-link">sign up here</a>
+                    </p>
+                    <p class="loginhere2">
+                        just here for some information?  <a href="index.html" class="loginhere-link">be a guest!</a>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- JS -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="loginandsignup/js/sign_in.js"></script>
+
+    <!-- Firebase auth (shared config) -->
+    <script type="module" src="js/auth-login.js"></script>
+</body>
+</html>

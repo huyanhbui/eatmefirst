@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+
+    <!-- Font Icon -->
+    <link rel="stylesheet" href="loginandsignup/fonts/material-icon/css/material-design-iconic-font.css">
+
+    <!-- Main css -->
+    <link rel="stylesheet" href="loginandsignup/css/style.css">
+
+    <!-- Entrance animations (matches the rest of the site) -->
+    <link rel="stylesheet" href="css/auth-anim.css">
+</head>
+
+<body>
+
+    <div class="main">
+
+        <section class="signup">
+            <!-- <img src="images/signup-bg.jpg" alt=""> -->
+            <div class="container">
+                <div class="signup-content">
+                    <form method="POST" id="signup-form" class="signup-form">
+                        <h2 class="form-title">Create account</h2>
+                        <div class="form-group">
+                            <input type="text" class="form-input" name="name" id="name" placeholder="Your Name" />
+                        </div>
+                        <div class="form-group">
+                            <input type="email" class="form-input" name="email" id="emaill" placeholder="Your Email" />
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-input" name="password" id="passwordd"
+                                placeholder="Password" />
+                            <span toggle="#password" class="zmdi zmdi-eye field-icon toggle-password"></span>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-input" name="re_password" id="re_password"
+                                placeholder="Repeat your password" />
+                        </div>
+
+                        <div class="form-group">
+                            <input type="submit" name="submit" id="submitt" class="form-submit" value="Sign up" />
+                        </div>
+                        <p class="loginhere">
+                            already have  an account ? <a href="log in.html" class="loginhere-link">Login here</a>
+                        </p>
+                        <p class="loginhere2">
+                            just here for some information?  <a href="index.html" class="loginhere-link">be a guest!</a>
+                        </p>
+                        <div class="col">
+                            <a href="#" class="fb btn">
+                              <i class="fa fa-facebook fa-fw"></i> Login with Facebook
+                            </a>
+                            <a href="#" class="twitter btn">
+                              <i class="fa fa-twitter fa-fw"></i> Login with Twitter
+                            </a>
+                            <a href="#" class="google btn">
+                              <i class="fa fa-google fa-fw"></i> Login with Google+
+                            </a>
+                          </div>
+                          
+                    </form>
+                    
+                    
+                </div>
+                
+            </div>
+            
+        </section>
+
+    </div>
+
+    <!-- JS -->
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="js/main.js"></script>
+
+    <!-- Firebase auth (shared config) -->
+    <script type="module" src="js/auth-signup.js"></script>
+</body>
+
+</html>

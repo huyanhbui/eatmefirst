@@ -1,0 +1,95 @@
+/* =====================================================================
+   "Save Food" theme override.
+   Layered ON TOP of style.css so the original template is untouched —
+   this file only re-skins colours from festival-gold to a fresh, food
+   green palette and adds a couple of small awareness components.
+   ===================================================================== */
+
+:root {
+  --leaf: #2e7d32;       /* primary green */
+  --leaf-dark: #1b5e20;  /* hover / deep green */
+  --leaf-soft: #eaf4e8;  /* page background */
+  --tomato: #e8543f;     /* warm accent for "waste" stats */
+  --cream: #ffffff;
+}
+
+/* Page background: pale yellow -> soft green */
+body { background: var(--leaf-soft) !important; }
+
+/* The big header box: gold -> green, with white text */
+#header .header-thumb { background: var(--leaf) !important; border-color: #ffffff !important; }
+#header .header-thumb h1,
+#header .header-thumb h3 { color: #ffffff !important; }
+
+/* Subtle green wash over the header photos so they feel on-theme */
+.header-one, .header-two, .header-three, .header-four, .header-five {
+  background-color: rgba(27, 94, 32, 0.45) !important;
+  background-blend-mode: multiply;
+  background-size: cover !important;
+  background-position: center !important;
+}
+
+/* Portfolio filter pills + any gold buttons -> green */
+.opc-main-bg { background: var(--leaf) !important; }
+.filter-wrapper li a.selected,
+.filter-wrapper li a:hover { background: var(--leaf-dark) !important; color: #fff !important; }
+
+#blog .blog-thumb .btn,
+.btn-default {
+  background: var(--leaf) !important;
+  border-color: var(--leaf) !important;
+  color: #fff !important;
+}
+#blog .blog-thumb .btn:hover,
+.btn-default:hover { background: var(--leaf-dark) !important; color:#fff !important; }
+
+a { color: var(--leaf); }
+a:hover { color: var(--leaf-dark); }
+
+.FaQ { color: var(--leaf) !important; }
+
+/* ---------- Awareness stat cards (used on About) ---------- */
+.impact-stats { margin: 20px 0 10px; }
+.stat-card {
+  background: #fff;
+  border: 1px solid #e2ebe0;
+  border-top: 5px solid var(--leaf);
+  border-radius: 10px;
+  padding: 26px 18px;
+  text-align: center;
+  box-shadow: 0 6px 18px rgba(27, 94, 32, 0.08);
+  margin-bottom: 24px;
+  min-height: 200px;
+}
+.stat-card.warn { border-top-color: var(--tomato); }
+.stat-card .stat-figure {
+  font-size: 2.6rem;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--leaf);
+}
+.stat-card.warn .stat-figure { color: var(--tomato); }
+.stat-card .stat-text { color: #555; margin-top: 8px; font-size: 0.98rem; }
+
+/* ---------- EatMeFirst call-to-action band ---------- */
+.eat-cta {
+  background: linear-gradient(135deg, var(--leaf), var(--leaf-dark));
+  color: #fff;
+  border-radius: 14px;
+  padding: 40px 30px;
+  text-align: center;
+  margin: 10px 0 40px;
+}
+.eat-cta h2 { color: #fff; margin-top: 0; }
+.eat-cta p { color: #eafbe9; max-width: 680px; margin: 12px auto 22px; }
+.eat-cta .eat-btn {
+  display: inline-block;
+  background: #fff;
+  color: var(--leaf-dark) !important;
+  font-weight: 700;
+  padding: 14px 30px;
+  border-radius: 30px;
+  text-decoration: none;
+  transition: transform .08s ease, box-shadow .15s ease;
+}
+.eat-cta .eat-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(0,0,0,.25); }

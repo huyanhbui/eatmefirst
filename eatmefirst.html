@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EatMeFirst — never waste food again</title>
+  <meta name="description" content="Track what's in your fridge, see what to eat first, and stop throwing away food." />
+  <link rel="stylesheet" href="css/eatmefirst.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo">🥬</span>
+      <div>
+        <h1>EatMeFirst</h1>
+        <p class="tagline">Eat it before you bin it.</p>
+      </div>
+    </div>
+    <div class="top-actions">
+      <span id="userBadge" class="user-badge hidden"></span>
+      <a id="authLink" href="log in.html" class="ghost-btn">Log in</a>
+      <button id="settingsBtn" class="ghost-btn" title="Settings (AI key)">⚙ AI</button>
+      <a href="index.html" class="ghost-btn" title="Back to Save Food" style="text-decoration:none;">&larr; Save Food</a>
+      <button id="notifyBtn" class="ghost-btn" title="Enable expiry reminders">
+        🔔 <span id="notifyLabel">Reminders</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Sync banner -->
+    <div id="syncBanner" class="sync-banner hidden">
+      You're browsing as a guest — items are saved on this device only.
+      <a href="log in.html">Log in</a> to sync your fridge across devices.
+    </div>
+
+    <!-- Stats -->
+    <section class="stats" id="stats">
+      <div class="stat">
+        <span class="stat-num" id="statTracked">0</span>
+        <span class="stat-label">items tracked</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num good" id="statSaved">0</span>
+        <span class="stat-label">saved from the bin</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num good" id="statMoney">$0</span>
+        <span class="stat-label">money saved</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num bad" id="statWasted">0</span>
+        <span class="stat-label">wasted</span>
+      </div>
+    </section>
+
+    <!-- Add form -->
+    <section class="card add-card">
+      <h2>Add to your fridge</h2>
+      <form id="addForm" class="add-form" autocomplete="off">
+        <div class="field grow">
+          <label for="name">Food</label>
+          <input id="name" name="name" type="text" placeholder="e.g. Greek yogurt" required />
+        </div>
+        <div class="field">
+          <label for="category">Category</label>
+          <select id="category" name="category"></select>
+        </div>
+        <div class="field qty">
+          <label for="qty">Qty</label>
+          <input id="qty" name="qty" type="number" min="1" step="1" value="1" />
+        </div>
+        <div class="field">
+          <label for="expiry">Use by</label>
+          <input id="expiry" name="expiry" type="date" required />
+        </div>
+        <div class="field price">
+          <label for="price">Value $</label>
+          <input id="price" name="price" type="number" min="0" step="0.5" placeholder="3" />
+        </div>
+        <button type="submit" class="primary-btn">Add</button>
+      </form>
+
+      <!-- Smart add -->
+      <div class="smart-add">
+        <button type="button" id="photoBtn" class="smart-btn">📷 Add by photo</button>
+        <button type="button" id="barcodeBtn" class="smart-btn">🔍 Add by barcode</button>
+        <span id="smartStatus" class="smart-status"></span>
+      </div>
+      <input type="file" accept="image/*" capture="environment" id="photoInput" hidden />
+
+      <!-- Barcode panel -->
+      <div id="barcodePanel" class="barcode-panel hidden">
+        <input type="text" id="barcodeInput" inputmode="numeric" placeholder="Type or scan a barcode number" />
+        <button type="button" id="barcodeLookupBtn" class="smart-btn">Look up</button>
+        <button type="button" id="barcodeScanBtn" class="smart-btn hidden">📸 Scan</button>
+      </div>
+
+      <div class="quick-add" id="quickAdd"></div>
+    </section>
+
+    <!-- Recipe (AI) -->
+    <section class="card recipe-card">
+      <div class="recipe-head">
+        <h2>🍳 Cook from your fridge</h2>
+        <button type="button" id="recipeBtn" class="primary-btn">Suggest a recipe</button>
+      </div>
+      <p class="recipe-hint">Uses your items that are expiring soonest. Needs an AI key (⚙ AI).</p>
+      <div id="recipeOutput" class="recipe-output"></div>
+    </section>
+
+    <!-- Suggestions -->
+    <section class="card suggest-card hidden" id="suggestCard">
+      <h2>⚡ Use these up soon</h2>
+      <p id="suggestText" class="suggest-text"></p>
+    </section>
+
+    <!-- List -->
+    <section class="list-section">
+      <div class="list-head">
+        <h2>Your fridge <span class="count" id="listCount"></span></h2>
+        <div class="filters" id="filters">
+          <button class="chip active" data-filter="all">All</button>
+          <button class="chip" data-filter="soon">Eat soon</button>
+          <button class="chip" data-filter="fresh">Fresh</button>
+        </div>
+      </div>
+      <ul class="item-list" id="itemList"></ul>
+      <div class="empty hidden" id="emptyState">
+        <span class="empty-emoji">🧊</span>
+        <p>Your fridge is empty here. Add something above to start tracking.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p id="footerNote">Guest mode: data stays on this device. Built with EatMeFirst.</p>
+  </footer>
+
+  <!-- Settings modal -->
+  <div id="settingsModal" class="modal-overlay hidden">
+    <div class="modal">
+      <h3>AI settings</h3>
+      <p class="modal-note">
+        Photo recognition and recipe ideas use the Claude API. Paste your Anthropic API key below —
+        it's stored <strong>only in this browser</strong> (localStorage) and sent directly to Anthropic,
+        never to us. Best for personal/demo use; for a public app, proxy calls through your own server.
+      </p>
+      <label class="modal-label" for="apiKeyInput">Anthropic API key</label>
+      <input type="password" id="apiKeyInput" placeholder="sk-ant-..." />
+      <label class="modal-label" for="modelInput">Model</label>
+      <select id="modelInput">
+        <option value="claude-opus-4-8">Claude Opus 4.8 (best)</option>
+        <option value="claude-sonnet-4-6">Claude Sonnet 4.6 (faster/cheaper)</option>
+        <option value="claude-haiku-4-5">Claude Haiku 4.5 (fastest)</option>
+      </select>
+      <div class="modal-actions">
+        <button type="button" id="settingsClearBtn" class="smart-btn">Remove key</button>
+        <span style="flex:1"></span>
+        <button type="button" id="settingsCancelBtn" class="smart-btn">Cancel</button>
+        <button type="button" id="settingsSaveBtn" class="primary-btn">Save</button>
+      </div>
+      <p class="modal-tiny">Get a key at <a href="https://console.anthropic.com/" target="_blank" rel="noopener">console.anthropic.com</a>.</p>
+    </div>
+  </div>
+
+  <!-- Scan modal -->
+  <div id="scanModal" class="modal-overlay hidden">
+    <div class="modal">
+      <h3>Scan a barcode</h3>
+      <video id="scanVideo" playsinline class="scan-video"></video>
+      <p id="scanStatus" class="modal-tiny">Point your camera at the barcode…</p>
+      <div class="modal-actions">
+        <span style="flex:1"></span>
+        <button type="button" id="scanCloseBtn" class="smart-btn">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="js/eatmefirst.js"></script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+/* =====================================================================
+   Entrance animations for the login / sign-up pages.
+   Replicates the fade-up entrance used across the rest of the site
+   (animate.css "fadeInUp" + WOW staggered delays) but with pure CSS —
+   no JS dependency, so it can't conflict with the auth page scripts.
+   Targets the template's existing classes; no HTML restructuring needed.
+   ===================================================================== */
+
+@keyframes authFadeInUp {
+  from { opacity: 0; transform: translate3d(0, 40px, 0); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes authPopIn {
+  from { opacity: 0; transform: scale(0.96) translateY(20px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* The card pops in first... */
+.signup-content {
+  animation: authPopIn 0.55s ease both;
+}
+
+/* ...then its contents rise in sequence, matching the site's stagger. */
+.signup-content .form-title,
+.signup-content .signup-form .form-group,
+.signup-content .loginhere,
+.signup-content .loginhere2,
+.signup-content .col {
+  animation: authFadeInUp 0.6s ease both;
+}
+
+/* Staggered delays (works for both the 3-field login and 5-field signup). */
+.signup-content .form-title                                  { animation-delay: 0.15s; }
+.signup-content .signup-form .form-group:nth-of-type(1)      { animation-delay: 0.25s; }
+.signup-content .signup-form .form-group:nth-of-type(2)      { animation-delay: 0.35s; }
+.signup-content .signup-form .form-group:nth-of-type(3)      { animation-delay: 0.45s; }
+.signup-content .signup-form .form-group:nth-of-type(4)      { animation-delay: 0.55s; }
+.signup-content .signup-form .form-group:nth-of-type(5)      { animation-delay: 0.65s; }
+.signup-content .loginhere                                   { animation-delay: 0.60s; }
+.signup-content .loginhere2                                  { animation-delay: 0.70s; }
+.signup-content .col                                         { animation-delay: 0.80s; }
+
+/* Inputs gain a subtle lift on focus, and the submit button feels alive
+   like the buttons elsewhere on the site. */
+.form-input {
+  transition: transform 0.15s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.form-input:focus {
+  transform: translateY(-1px);
+}
+.form-submit {
+  transition: transform 0.12s ease, filter 0.2s ease, box-shadow 0.2s ease;
+}
+.form-submit:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.03);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+}
+.form-submit:active {
+  transform: translateY(0);
+}
+
+/* Accessibility: honor users who prefer no motion. */
+@media (prefers-reduced-motion: reduce) {
+  .signup-content,
+  .signup-content .form-title,
+  .signup-content .signup-form .form-group,
+  .signup-content .loginhere,
+  .signup-content .loginhere2,
+  .signup-content .col {
+    animation: none !important;
+  }
+}
