@@ -40,7 +40,12 @@ h1, h2 { margin: 0; }
   margin: 0 auto;
 }
 .brand { display: flex; align-items: center; gap: 14px; }
-.logo { font-size: 2.2rem; line-height: 1; }
+.logo-mark {
+  width: 34px; height: 34px; border-radius: 9px;
+  background: linear-gradient(135deg, var(--accent) 0%, #1b5e20 100%);
+  box-shadow: 0 4px 12px rgba(74, 222, 128, 0.3);
+  display: inline-block; flex: none;
+}
 .topbar h1 { font-size: 1.4rem; letter-spacing: -0.02em; }
 .tagline { margin: 0; color: var(--muted); font-size: 0.85rem; }
 
@@ -185,7 +190,8 @@ h1, h2 { margin: 0; }
 .item.urgent-soon { border-left-color: var(--warn); }
 .item.urgent-fresh { border-left-color: var(--accent); }
 
-.item-emoji { font-size: 1.6rem; }
+.item-dot { width: 12px; height: 12px; border-radius: 50%; flex: none; box-shadow: 0 0 0 4px rgba(255,255,255,0.04); }
+.cat-dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; margin-right: 7px; vertical-align: middle; }
 .item-main { flex: 1; min-width: 0; }
 .item-name { font-weight: 600; }
 .item-meta { font-size: 0.82rem; color: var(--muted); }

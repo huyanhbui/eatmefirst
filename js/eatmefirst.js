@@ -21,14 +21,14 @@ import { ref, set, onValue, off } from "https://www.gstatic.com/firebasejs/10.4.
   const DEFAULT_MODEL = "claude-opus-4-8";
 
   const CATEGORIES = [
-    { key: "dairy", label: "Dairy", emoji: "🥛", shelf: 7 },
-    { key: "produce", label: "Produce", emoji: "🥬", shelf: 5 },
-    { key: "meat", label: "Meat / Fish", emoji: "🍗", shelf: 3 },
-    { key: "leftovers", label: "Leftovers", emoji: "🍱", shelf: 3 },
-    { key: "bakery", label: "Bakery", emoji: "🍞", shelf: 4 },
-    { key: "eggs", label: "Eggs", emoji: "🥚", shelf: 21 },
-    { key: "drinks", label: "Drinks", emoji: "🧃", shelf: 10 },
-    { key: "other", label: "Other", emoji: "🧊", shelf: 7 },
+    { key: "dairy", label: "Dairy", color: "#60a5fa", shelf: 7 },
+    { key: "produce", label: "Produce", color: "#4ade80", shelf: 5 },
+    { key: "meat", label: "Meat / Fish", color: "#f87171", shelf: 3 },
+    { key: "leftovers", label: "Leftovers", color: "#fbbf24", shelf: 3 },
+    { key: "bakery", label: "Bakery", color: "#d8a657", shelf: 4 },
+    { key: "eggs", label: "Eggs", color: "#fcd34d", shelf: 21 },
+    { key: "drinks", label: "Drinks", color: "#38bdf8", shelf: 10 },
+    { key: "other", label: "Other", color: "#9ca3af", shelf: 7 },
   ];
   const CAT_KEYS = CATEGORIES.map((c) => c.key);
 
@@ -134,7 +134,7 @@ import { ref, set, onValue, off } from "https://www.gstatic.com/firebasejs/10.4.
   function updateAccountUI() {
     if (currentUser) {
       const who = currentUser.displayName || currentUser.email;
-      els.userBadge.textContent = "👤 " + who;
+      els.userBadge.textContent = who;
       els.userBadge.classList.remove("hidden");
       els.authLink.textContent = "Log out";
       els.authLink.href = "#";
@@ -151,12 +151,12 @@ import { ref, set, onValue, off } from "https://www.gstatic.com/firebasejs/10.4.
 
   // ---- Render ----
   function buildCategoryOptions() {
-    els.category.innerHTML = CATEGORIES.map((c) => `<option value="${c.key}">${c.emoji} ${c.label}</option>`).join("");
+    els.category.innerHTML = CATEGORIES.map((c) => `<option value="${c.key}">${c.label}</option>`).join("");
   }
   function buildQuickAdd() {
     els.quickAdd.innerHTML =
       `<span style="color:var(--muted);font-size:.8rem;align-self:center;">Quick add:</span>` +
-      QUICK_ITEMS.map((q) => `<button type="button" data-name="${q.name}" data-cat="${q.category}">${cat(q.category).emoji} ${q.name}</button>`).join("");
+      QUICK_ITEMS.map((q) => `<button type="button" data-name="${q.name}" data-cat="${q.category}"><span class="cat-dot" style="background:${cat(q.category).color}"></span>${q.name}</button>`).join("");
   }
   function render() {
     const sorted = [...items].sort((a, b) => a.expiry.localeCompare(b.expiry));
@@ -178,15 +178,15 @@ import { ref, set, onValue, off } from "https://www.gstatic.com/firebasejs/10.4.
     const qty = it.qty > 1 ? `<span class="item-meta">×${it.qty}</span> ` : "";
     return `
       <li class="item urgent-${u}" data-id="${it.id}">
-        <span class="item-emoji">${c.emoji}</span>
+        <span class="item-dot" style="background:${c.color}"></span>
         <div class="item-main">
           <div class="item-name">${escapeHtml(it.name)}</div>
           <div class="item-meta">${qty}${c.label}</div>
         </div>
         <span class="badge ${u}">${expiryLabel(days)}</span>
         <div class="item-actions">
-          <button class="act-btn eat" data-act="eat" data-id="${it.id}">✓ Ate it</button>
-          <button class="act-btn toss" data-act="toss" data-id="${it.id}">🗑 Tossed</button>
+          <button class="act-btn eat" data-act="eat" data-id="${it.id}">Ate it</button>
+          <button class="act-btn toss" data-act="toss" data-id="${it.id}">Tossed</button>
         </div>
       </li>`;
   }
@@ -270,7 +270,7 @@ import { ref, set, onValue, off } from "https://www.gstatic.com/firebasejs/10.4.
     if (!due.length) return;
     const names = due.map((it) => it.name).slice(0, 3).join(", ");
     const more = due.length > 3 ? ` +${due.length - 3} more` : "";
-    new Notification("🍽 Eat these before they spoil", {
+    new Notification("Eat these before they spoil", {
       body: `${names}${more} ${due.length === 1 ? "needs" : "need"} eating soon.`, tag: "eatmefirst-expiry",
     });
     due.forEach((it) => (it.notified = true));
@@ -313,8 +313,8 @@ import { ref, set, onValue, off } from "https://www.gstatic.com/firebasejs/10.4.
   }
 
   function aiErrorMessage(err) {
-    if (err.code === "NO_KEY") return "Add your Anthropic API key first (⚙ AI).";
-    if (err.status === 401) return "Invalid API key — check it in ⚙ AI.";
+    if (err.code === "NO_KEY") return "Add your Anthropic API key first (AI settings).";
+    if (err.status === 401) return "Invalid API key — check it in AI settings.";
     if (err.status === 429) return "Rate limited by Anthropic — try again in a moment.";
     if (String(err.message).includes("Failed to fetch"))
       return "Network/CORS error reaching Anthropic. Check your key and connection.";
@@ -333,7 +333,7 @@ import { ref, set, onValue, off } from "https://www.gstatic.com/firebasejs/10.4.
   async function handlePhoto(file) {
     if (!file) return;
     if (!getApiKey()) { openSettings(); return; }
-    els.smartStatus.textContent = "📷 Reading photo…";
+    els.smartStatus.textContent = "Reading photo…";
     els.photoBtn.disabled = true;
     try {
       const { data, media } = await fileToBase64(file);
@@ -364,9 +364,9 @@ import { ref, set, onValue, off } from "https://www.gstatic.com/firebasejs/10.4.
         schema,
       });
       prefillForm(out);
-      els.smartStatus.textContent = "✓ Found: " + out.name + " — review and press Add.";
+      els.smartStatus.textContent = "Found: " + out.name + " — review and press Add.";
     } catch (err) {
-      els.smartStatus.textContent = "⚠ " + aiErrorMessage(err);
+      els.smartStatus.textContent = aiErrorMessage(err);
     } finally {
       els.photoBtn.disabled = false;
       els.photoInput.value = "";
@@ -385,7 +385,7 @@ import { ref, set, onValue, off } from "https://www.gstatic.com/firebasejs/10.4.
   async function lookupBarcode(code) {
     code = (code || "").replace(/\D/g, "");
     if (!code) { els.smartStatus.textContent = "Enter a barcode number first."; return; }
-    els.smartStatus.textContent = "🔍 Looking up " + code + "…";
+    els.smartStatus.textContent = "Looking up " + code + "…";
     try {
       const res = await fetch(`https://world.openfoodfacts.org/api/v2/product/${code}.json?fields=product_name,brands,categories_tags_en`);
       const j = await res.json();
@@ -394,7 +394,7 @@ import { ref, set, onValue, off } from "https://www.gstatic.com/firebasejs/10.4.
       const name = p.product_name || p.brands || "Unknown item";
       const guessed = guessCategory((p.categories_tags_en || []).join(" ").toLowerCase());
       prefillForm({ name, category: guessed, quantity: 1, expiry: "" });
-      els.smartStatus.textContent = "✓ " + name + " — set the use-by date and press Add.";
+      els.smartStatus.textContent = name + " — set the use-by date and press Add.";
     } catch (e) {
       els.smartStatus.textContent = "Lookup failed (network). Add it manually.";
     }
@@ -458,7 +458,7 @@ import { ref, set, onValue, off } from "https://www.gstatic.com/firebasejs/10.4.
     const listing = pick.map((it) => `${it.name} (${expiryLabel(daysUntil(it.expiry)).toLowerCase()})`).join(", ");
 
     els.recipeBtn.disabled = true;
-    els.recipeOutput.innerHTML = `<p class="recipe-loading">👩‍🍳 Cooking up an idea from: ${escapeHtml(listing)}…</p>`;
+    els.recipeOutput.innerHTML = `<p class="recipe-loading">Cooking up an idea from: ${escapeHtml(listing)}…</p>`;
     try {
       const schema = {
         type: "object",
@@ -486,7 +486,7 @@ import { ref, set, onValue, off } from "https://www.gstatic.com/firebasejs/10.4.
       });
       renderRecipe(out);
     } catch (err) {
-      els.recipeOutput.innerHTML = `<p class="recipe-error">⚠ ${escapeHtml(aiErrorMessage(err))}</p>`;
+      els.recipeOutput.innerHTML = `<p class="recipe-error">${escapeHtml(aiErrorMessage(err))}</p>`;
     } finally {
       els.recipeBtn.disabled = false;
     }
@@ -519,7 +519,7 @@ import { ref, set, onValue, off } from "https://www.gstatic.com/firebasejs/10.4.
     if (k) localStorage.setItem(KEY_KEY, k); else localStorage.removeItem(KEY_KEY);
     localStorage.setItem(MODEL_KEY, els.modelInput.value);
     closeSettings();
-    els.smartStatus.textContent = k ? "✓ AI key saved (this browser only)." : "AI key removed.";
+    els.smartStatus.textContent = k ? "AI key saved (this browser only)." : "AI key removed.";
   }
 
   // ---- Wire up ----

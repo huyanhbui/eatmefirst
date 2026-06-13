@@ -10,7 +10,7 @@
 <body>
   <header class="topbar">
     <div class="brand">
-      <span class="logo">🥬</span>
+      <span class="logo-mark" aria-hidden="true"></span>
       <div>
         <h1>EatMeFirst</h1>
         <p class="tagline">Eat it before you bin it.</p>
@@ -19,10 +19,10 @@
     <div class="top-actions">
       <span id="userBadge" class="user-badge hidden"></span>
       <a id="authLink" href="log in.html" class="ghost-btn">Log in</a>
-      <button id="settingsBtn" class="ghost-btn" title="Settings (AI key)">⚙ AI</button>
-      <a href="index.html" class="ghost-btn" title="Back to Save Food" style="text-decoration:none;">&larr; Save Food</a>
+      <button id="settingsBtn" class="ghost-btn" title="Settings (AI key)">AI settings</button>
+      <a href="index.html" class="ghost-btn" title="Back to Save Food" style="text-decoration:none;">Save Food</a>
       <button id="notifyBtn" class="ghost-btn" title="Enable expiry reminders">
-        🔔 <span id="notifyLabel">Reminders</span>
+        <span id="notifyLabel">Reminders</span>
       </button>
     </div>
   </header>
@@ -83,8 +83,8 @@
 
       <!-- Smart add -->
       <div class="smart-add">
-        <button type="button" id="photoBtn" class="smart-btn">📷 Add by photo</button>
-        <button type="button" id="barcodeBtn" class="smart-btn">🔍 Add by barcode</button>
+        <button type="button" id="photoBtn" class="smart-btn">Add by photo</button>
+        <button type="button" id="barcodeBtn" class="smart-btn">Add by barcode</button>
         <span id="smartStatus" class="smart-status"></span>
       </div>
       <input type="file" accept="image/*" capture="environment" id="photoInput" hidden />
@@ -93,7 +93,7 @@
       <div id="barcodePanel" class="barcode-panel hidden">
         <input type="text" id="barcodeInput" inputmode="numeric" placeholder="Type or scan a barcode number" />
         <button type="button" id="barcodeLookupBtn" class="smart-btn">Look up</button>
-        <button type="button" id="barcodeScanBtn" class="smart-btn hidden">📸 Scan</button>
+        <button type="button" id="barcodeScanBtn" class="smart-btn hidden">Scan</button>
       </div>
 
       <div class="quick-add" id="quickAdd"></div>
@@ -102,16 +102,16 @@
     <!-- Recipe (AI) -->
     <section class="card recipe-card">
       <div class="recipe-head">
-        <h2>🍳 Cook from your fridge</h2>
+        <h2>Cook from your fridge</h2>
         <button type="button" id="recipeBtn" class="primary-btn">Suggest a recipe</button>
       </div>
-      <p class="recipe-hint">Uses your items that are expiring soonest. Needs an AI key (⚙ AI).</p>
+      <p class="recipe-hint">Uses your items that are expiring soonest. Needs an AI key (see AI settings).</p>
       <div id="recipeOutput" class="recipe-output"></div>
     </section>
 
     <!-- Suggestions -->
     <section class="card suggest-card hidden" id="suggestCard">
-      <h2>⚡ Use these up soon</h2>
+      <h2>Use these up soon</h2>
       <p id="suggestText" class="suggest-text"></p>
     </section>
 
@@ -127,7 +127,6 @@
       </div>
       <ul class="item-list" id="itemList"></ul>
       <div class="empty hidden" id="emptyState">
-        <span class="empty-emoji">🧊</span>
         <p>Your fridge is empty here. Add something above to start tracking.</p>
       </div>
     </section>

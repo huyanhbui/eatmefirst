@@ -93,3 +93,206 @@ a:hover { color: var(--leaf-dark); }
   transition: transform .08s ease, box-shadow .15s ease;
 }
 .eat-cta .eat-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(0,0,0,.25); }
+
+/* =====================================================================
+   MODERN LAYER — clean cards, soft shadows, rounded corners, modern
+   buttons. Applied site-wide via this stylesheet (linked on every page).
+   ===================================================================== */
+
+:root { --card-shadow: 0 14px 34px rgba(27,94,32,.10), 0 2px 6px rgba(0,0,0,.04); }
+
+body { color: #2a3a2d; }
+
+/* Headings a touch tighter / bolder for a modern feel */
+h1, h2, h3 { letter-spacing: -0.01em; }
+
+/* ---- Hero header box ---- */
+#header .header-thumb {
+  border: none !important;
+  border-radius: 20px !important;
+  padding: 46px 34px !important;
+  background: linear-gradient(135deg, var(--leaf) 0%, var(--leaf-dark) 100%) !important;
+  box-shadow: 0 20px 50px rgba(27, 94, 32, 0.28) !important;
+}
+#header .header-thumb h1 { font-weight: 800; }
+
+/* ---- Section label ---- */
+.FaQ {
+  font-weight: 700 !important;
+  letter-spacing: 0.18em !important;
+  font-size: 0.78rem !important;
+}
+
+/* ---- Filter pills (scoped under #portfolio for specificity) ---- */
+#portfolio .filter-wrapper li a {
+  border-radius: 30px !important;
+  border: 1.5px solid #cfe0cb !important;
+  background: #fff !important;
+  color: #4a5a4c !important;
+  letter-spacing: 0.06em !important;
+  font-weight: 600 !important;
+  padding: 9px 20px !important;
+  transition: all .2s ease !important;
+}
+#portfolio .filter-wrapper li a.selected,
+#portfolio .filter-wrapper li a:hover,
+#portfolio .filter-wrapper li a:focus {
+  background: var(--leaf) !important;
+  border-color: var(--leaf) !important;
+  color: #fff !important;
+}
+
+/* ---- Portfolio cards ---- */
+#portfolio { padding-bottom: 5rem; }
+#portfolio img { width: 100% !important; height: 230px !important; object-fit: cover; }
+#portfolio .portfolio-thumb {
+  border-radius: 16px !important;
+  overflow: hidden !important;
+  box-shadow: var(--card-shadow);
+  background: #fff;
+  transition: transform .22s ease, box-shadow .22s ease;
+  margin-bottom: 26px;
+}
+#portfolio .portfolio-thumb:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 22px 46px rgba(27,94,32,.20);
+}
+#portfolio .portfolio-thumb .portfolio-overlay {
+  background: linear-gradient(180deg, rgba(27,94,32,0) 0%, rgba(20,70,26,0.92) 100%) !important;
+}
+#portfolio .portfolio-thumb:hover .portfolio-overlay { opacity: 1 !important; }
+#portfolio .portfolio-thumb .portfolio-overlay .portfolio-item {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 20px !important;
+}
+#portfolio .portfolio-overlay h2 { color: #fff; font-size: 1.05rem; margin: 8px 0 0; }
+#portfolio .portfolio-thumb .portfolio-overlay .fa {
+  background: #fff !important;
+  color: var(--leaf-dark) !important;
+  align-self: flex-start;
+}
+
+/* ---- Blog cards ---- */
+#blog .blog-thumb {
+  background: #fff;
+  border: 1px solid #e7efe4;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: var(--card-shadow);
+  padding: 0 0 24px !important;
+  margin-bottom: 30px;
+  transition: transform .22s ease, box-shadow .22s ease;
+}
+#blog .blog-thumb:hover { transform: translateY(-6px); box-shadow: 0 22px 46px rgba(27,94,32,.18); }
+#blog .blog-thumb img {
+  width: 100%;
+  height: 210px;
+  object-fit: cover;
+  margin-bottom: 16px;
+}
+#blog .blog-thumb h1 { font-size: 1.18rem; line-height: 1.35; padding: 0 22px; margin: 0 0 6px; }
+#blog .blog-thumb h1 a, #blog .blog-thumb a h1 { color: #1f3322; }
+#blog .blog-thumb .post-format { padding: 0 22px; color: #8a978c; }
+#blog .blog-thumb > p { padding: 0 22px; color: #5d6b5f; }
+#blog .blog-thumb .btn {
+  margin: 14px 22px 0 !important;
+  border-radius: 30px !important;
+  padding: 9px 22px !important;
+  font-weight: 700 !important;
+  background: linear-gradient(135deg, var(--leaf), var(--leaf-dark)) !important;
+  border: none !important;
+  box-shadow: 0 6px 14px rgba(27,94,32,.22) !important;
+  transition: transform .12s ease, box-shadow .2s ease !important;
+}
+#blog .blog-thumb .btn:hover { transform: translateY(-2px); box-shadow: 0 10px 22px rgba(27,94,32,.3) !important; }
+
+/* ---- About ---- */
+#about img { border-radius: 14px !important; box-shadow: var(--card-shadow); margin-bottom: 14px; }
+#about blockquote {
+  border-left: 4px solid var(--leaf) !important;
+  background: #fff;
+  border-radius: 0 12px 12px 0;
+  padding: 16px 20px !important;
+  color: #44543f;
+  font-style: italic;
+  box-shadow: var(--card-shadow);
+}
+#about h1 { color: #1f3322; }
+
+/* ---- Single post / project bodies ---- */
+#single-post .blog-thumb, #single-project .project-info {
+  background: #fff;
+  border: 1px solid #e7efe4;
+  border-radius: 16px;
+  padding: 28px !important;
+  box-shadow: var(--card-shadow);
+}
+#single-post .post-image, #single-project img { border-radius: 14px !important; }
+#single-post .blog-comment-form .form-control,
+#single-post #comment-text {
+  border-radius: 12px !important;
+  border: 1.5px solid #dbe5d8 !important;
+  background: #f7faf6 !important;
+}
+#single-post .blog-comment-form .form-control:focus {
+  border-color: var(--leaf) !important;
+  box-shadow: 0 0 0 4px rgba(46,125,50,.14) !important;
+  background: #fff !important;
+}
+
+/* ---- Contact ---- */
+#contact .contact-form .form-control,
+#contact .form-control {
+  border-radius: 12px !important;
+  border: 1.5px solid #dbe5d8 !important;
+  background: #f7faf6 !important;
+  box-shadow: none !important;
+  transition: border-color .15s, box-shadow .15s, background .15s !important;
+}
+#contact .form-control:focus {
+  border-color: var(--leaf) !important;
+  box-shadow: 0 0 0 4px rgba(46,125,50,.14) !important;
+  background: #fff !important;
+}
+#contact input[type='submit'],
+#contact .contact-submit .form-control {
+  background: linear-gradient(135deg, var(--leaf), var(--leaf-dark)) !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 12px !important;
+  font-weight: 700 !important;
+  box-shadow: 0 8px 18px rgba(27,94,32,.26) !important;
+  transition: transform .12s ease !important;
+}
+#contact input[type='submit']:hover,
+#contact .contact-submit .form-control:hover { transform: translateY(-2px); }
+#contact iframe { border-radius: 16px !important; box-shadow: var(--card-shadow); }
+#contact .media {
+  background: #fff;
+  border: 1px solid #e7efe4;
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: var(--card-shadow);
+}
+#contact .fa {
+  color: var(--leaf) !important;
+  background: var(--leaf-soft);
+  border-radius: 10px;
+  padding: 10px;
+}
+
+/* ---- Footer ---- */
+footer { background: transparent; }
+footer .social-icon li a {
+  color: var(--leaf) !important;
+  border: 1.5px solid #cfe0cb;
+  border-radius: 50%;
+  transition: all .2s ease;
+}
+footer .social-icon li a:hover { background: var(--leaf); color: #fff !important; border-color: var(--leaf); }
+
+/* ---- Nav brand ---- */
+.brand a { font-weight: 800 !important; letter-spacing: -0.02em; }
