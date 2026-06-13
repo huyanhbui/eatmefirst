@@ -179,6 +179,7 @@ nav a {
   font-weight: 700;
   opacity: 1;
   text-decoration: none;
+  left: 1000px
 }
 
 .navicon {  
@@ -190,7 +191,7 @@ nav a {
   -webkit-justify-content: flex-end;
   -ms-flex-pack: end;
   justify-content: flex-end;
-  padding: 20px 0 0;
+  padding: 20px 20px 20px 20px;
 }
 
 nav ul {
@@ -335,7 +336,7 @@ a.icon {
 .circle.inline {
   position: relative;
   top: 0;
-  left: 0;
+  left: 370px;
   margin-top: 0;
   margin-left: 0;
   display: inline-block;
@@ -837,6 +838,7 @@ footer {
 
   .brand {
     padding-left: 24px;
+    right: 1000px
   }
 
   .header-one, .header-two,
