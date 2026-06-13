@@ -32,7 +32,12 @@ body {
   display: flex; align-items: center; justify-content: center; gap: 8px;
   font-weight: 700; font-size: 1.3rem; color: #1b5e20; margin-bottom: 4px;
 }
-.auth-logo { font-size: 1.7rem; line-height: 1; }
+.auth-mark {
+  width: 26px; height: 26px; border-radius: 8px;
+  background: linear-gradient(135deg, #4ade80 0%, #1b5e20 100%);
+  box-shadow: 0 4px 10px rgba(27, 94, 32, 0.35);
+  display: inline-block;
+}
 
 /* ---- Title / subtitle ---- */
 .form-title {
