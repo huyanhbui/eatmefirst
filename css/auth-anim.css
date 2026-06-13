@@ -22,6 +22,7 @@
 }
 
 /* ...then its contents rise in sequence, matching the site's stagger. */
+.signup-content .auth-brand,
 .signup-content .form-title,
 .signup-content .signup-form .form-group,
 .signup-content .loginhere,
@@ -31,6 +32,7 @@
 }
 
 /* Staggered delays (works for both the 3-field login and 5-field signup). */
+.signup-content .auth-brand                                  { animation-delay: 0.08s; }
 .signup-content .form-title                                  { animation-delay: 0.15s; }
 .signup-content .signup-form .form-group:nth-of-type(1)      { animation-delay: 0.25s; }
 .signup-content .signup-form .form-group:nth-of-type(2)      { animation-delay: 0.35s; }
@@ -64,6 +66,7 @@
 /* Accessibility: honor users who prefer no motion. */
 @media (prefers-reduced-motion: reduce) {
   .signup-content,
+  .signup-content .auth-brand,
   .signup-content .form-title,
   .signup-content .signup-form .form-group,
   .signup-content .loginhere,
