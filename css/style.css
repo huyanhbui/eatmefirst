@@ -674,13 +674,6 @@ a.icon {
   padding-right: 14px;
 }
 
-#single-post .blog-thumb {
-  float: left;
-  width:  100px;
-  height: 100px;
-  object-fit: cover;
-}
-
 #single-post .blog-comment h4 {
   font-weight: 700;
 }
