@@ -50,6 +50,11 @@
                         <div class="form-group">
                             <input type="submit" name="submit" id="submitt" class="form-submit" value="Sign up" />
                         </div>
+                        <div class="auth-divider"><span>or sign up with</span></div>
+                        <div class="social-auth">
+                            <button type="button" id="google-login" class="social-btn google"><i class="zmdi zmdi-google"></i> Google</button>
+                            <button type="button" id="github-login" class="social-btn github"><i class="zmdi zmdi-github"></i> GitHub</button>
+                        </div>
                         <p class="loginhere">
                             already have  an account ? <a href="log in.html" class="loginhere-link">Login here</a>
                         </p>
@@ -76,6 +81,7 @@
 
     <!-- Firebase auth (shared config) -->
     <script type="module" src="js/auth-signup.js"></script>
+    <script type="module" src="js/auth-social.js"></script>
 </body>
 
 </html>

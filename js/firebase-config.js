@@ -30,6 +30,10 @@ export function friendlyAuthError(code) {
     "auth/user-not-found": "No account found for that email.",
     "auth/too-many-requests": "Too many attempts. Please wait a moment and try again.",
     "auth/network-request-failed": "Network problem. Check your connection and retry.",
+    "auth/popup-closed-by-user": "Sign-in was cancelled.",
+    "auth/cancelled-popup-request": "Sign-in was cancelled.",
+    "auth/account-exists-with-different-credential":
+      "You already have an account with this email using a different sign-in method.",
   };
   return map[code] || "Something went wrong. Please try again.";
 }

@@ -118,3 +118,28 @@ body {
   .signup-content { padding: 32px 22px !important; }
   body { padding: 28px 12px !important; }
 }
+
+/* ---- Social sign-in ---- */
+.auth-divider {
+  display: flex; align-items: center; text-align: center;
+  color: #9aa89b; margin: 22px 0 16px; font-size: 0.85rem;
+}
+.auth-divider::before, .auth-divider::after {
+  content: ""; flex: 1; height: 1px; background: #e0e9dd;
+}
+.auth-divider span { padding: 0 12px; }
+
+.social-auth { display: flex; gap: 12px; }
+.social-btn {
+  flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 12px 10px; border-radius: 12px; border: 1.5px solid #dbe5d8;
+  background: #fff; color: #243528; font-weight: 700; font-size: 14px; cursor: pointer;
+  transition: border-color .15s ease, box-shadow .15s ease, transform .1s ease;
+}
+.social-btn:hover {
+  border-color: #2e7d32; box-shadow: 0 6px 16px rgba(27, 94, 32, .14);
+  transform: translateY(-1px);
+}
+.social-btn i { font-size: 18px; }
+.social-btn.google i { color: #ea4335; }
+.social-btn.github i { color: #1b1f23; }

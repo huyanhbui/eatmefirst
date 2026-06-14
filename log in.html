@@ -45,6 +45,11 @@
                             <input type="submit" name="submit" id="submitt" class="form-submit" value="Sign in "/>
                         </div>
                     </form>
+                    <div class="auth-divider"><span>or continue with</span></div>
+                    <div class="social-auth">
+                        <button type="button" id="google-login" class="social-btn google"><i class="zmdi zmdi-google"></i> Google</button>
+                        <button type="button" id="github-login" class="social-btn github"><i class="zmdi zmdi-github"></i> GitHub</button>
+                    </div>
                     <p class="loginhere">
                         don't have an account ? <a href="signup.html" class="loginhere-link">sign up here</a>
                     </p>
@@ -64,5 +69,6 @@
 
     <!-- Firebase auth (shared config) -->
     <script type="module" src="js/auth-login.js"></script>
+    <script type="module" src="js/auth-social.js"></script>
 </body>
 </html>
