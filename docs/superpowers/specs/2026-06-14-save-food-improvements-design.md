@@ -43,17 +43,24 @@ build tooling is added.
   remain on About, which is the deep explainer).
 
 **Keep:** the 6-card `#portfolio` story grid and the EatMeFirst CTA section.
+The 6 portfolio **thumbnails on the landing page are already good — leave them
+unchanged.**
 
-**Story-card images:** Replace all 6 portfolio images with downloaded stock
-photos that match each card:
-- `food_watse.jfif` → waste / discarded food
-- `african_hungry.jfif` → hunger
-- `vietnam.jfif` → Vietnamese market/household
-- `fridge_box.jfif` → fridge / food storage
-- `How To Stop Wasting Food.jfif` → leftovers
-- `eat_me_first_logo.png` → kitchen/app-style image for "Meet EatMeFirst"
+**Portfolio detail images:** The image that needs replacing is the inline body
+photo *inside* each of the 6 `single-project*.html` detail pages (e.g.
+`single-project.html` currently shows `images/cake_1_0.jpg`, which doesn't match
+"1.3 billion tonnes wasted"). Replace each detail page's body image with a
+downloaded stock photo matching that page's topic:
+- `single-project.html` — "1.3 Billion Tonnes Wasted" → waste / discarded food
+- `single-project 1 .html` — "Hunger in Africa" → hunger
+- `single-project  2.html` — "Vietnam's Weekly Waste" → Vietnamese market/household
+- `single-project  3.html` — "Smart Storage Tips" → fridge / food storage
+- `single-project  4.html` — "Love Your Leftovers" → leftovers
+- `single-project  5.html` — "Meet EatMeFirst" → kitchen / app-style image
 
-(New files saved under `images/`; update the `src` attributes to match.)
+(New files saved under `images/`; update each page's `<img src>` to match. Verify
+the exact current image filename in each page during implementation, since the
+six pages may not all use the same placeholder.)
 
 ## 2. Header backgrounds — a photo per page
 
@@ -159,13 +166,14 @@ unaffected.
 
 ## Implementation order
 
-1. Download all stock images (6 story cards, 9 blog previews, 5 header
-   backgrounds) into `images/`.
+1. Download all stock images (6 portfolio detail images, 9 blog previews, 5
+   header backgrounds) into `images/`.
 2. Fix blog grid columns in `blog.html`.
 3. Create the 9 `single-post-N.html` pages and rewire `blog.html` links + preview
    images.
 4. Header background CSS + translucent `.header-thumb` in `food-theme.css`.
-5. Landing page `#intro` rewrite + story-card image swaps in `index.html`.
+5. Landing page `#intro` rewrite (`index.html`) + swap the body image inside each
+   of the 6 `single-project*.html` detail pages.
 6. Social login: `js/auth-social.js` + buttons in `log in.html` / `signup.html`.
 7. Write the setup checklist into the repo (e.g. a short `SOCIAL-LOGIN-SETUP.md`).
 
