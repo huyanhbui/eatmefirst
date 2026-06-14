@@ -11,8 +11,8 @@ import {
   serverTimestamp,
 } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
 
-// One comment thread per blog post. Change this string per page if you add more posts.
-const POST_ID = "mid-autumn-festival";
+// One comment thread per blog post, supplied by <body data-post-id="...">.
+const POST_ID = (document.body && document.body.dataset.postId) || "general";
 
 const listEl = document.getElementById("comment-list");
 const formEl = document.getElementById("comment-form");
