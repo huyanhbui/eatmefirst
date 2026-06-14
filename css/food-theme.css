@@ -29,6 +29,14 @@ body { background: var(--leaf-soft) !important; }
   background-position: center !important;
 }
 
+/* Per-page header photos (downloaded into images/). The green wash above
+   multiplies over each one so white heading text stays readable. */
+.header-one   { background-image: url('../images/header-one-bg.jpg')   !important; }
+.header-two   { background-image: url('../images/header-two-bg.jpg')   !important; }
+.header-three { background-image: url('../images/header-three-bg.jpg') !important; }
+.header-four  { background-image: url('../images/header-four-bg.jpg')  !important; }
+.header-five  { background-image: url('../images/header-five-bg.jpg')  !important; }
+
 /* Portfolio filter pills + any gold buttons -> green */
 .opc-main-bg { background: var(--leaf) !important; }
 .filter-wrapper li a.selected,
@@ -106,12 +114,14 @@ body { color: #2a3a2d; }
 /* Headings a touch tighter / bolder for a modern feel */
 h1, h2, h3 { letter-spacing: -0.01em; }
 
-/* ---- Hero header box ---- */
+/* ---- Hero header box (translucent so the page photo shows through) ---- */
 #header .header-thumb {
   border: none !important;
   border-radius: 20px !important;
   padding: 46px 34px !important;
-  background: linear-gradient(135deg, var(--leaf) 0%, var(--leaf-dark) 100%) !important;
+  background: rgba(20, 70, 26, 0.55) !important;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
   box-shadow: 0 20px 50px rgba(27, 94, 32, 0.28) !important;
 }
 #header .header-thumb h1 { font-weight: 800; }
