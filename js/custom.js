@@ -72,39 +72,22 @@ jQuery(document).ready(function($){
 $(document).ready(function() { 
     "use strict";
 
-    // Navbar Sticky
+    // Set active tab based on URL
+    var currentPath = window.location.pathname.split('/').pop() || 'index.html';
+    
+    // Default to blog if it's a single post
+    if(currentPath.indexOf('single-post') > -1) {
+        currentPath = 'blog.html';
+    } else if(currentPath.indexOf('single-project') > -1) {
+        currentPath = 'index.html';
+    }
 
-    (function() {
-        var docElem = document.documentElement,
-            didScroll = false,
-            stickynav = 50;
-            document.querySelector( '.nav-container' );
-        function init() {
-            window.addEventListener( 'scroll', function() {
-                if( !didScroll ) {
-                    didScroll = true;
-                    setTimeout( scrollPage, 50 );
-                }
-            }, false );
+    $('.gh-tab-item').each(function() {
+        var href = $(this).attr('href');
+        if (href === currentPath) {
+            $(this).addClass('active');
         }
-        
-        function scrollPage() {
-            var sy = scrollY();
-            if ( sy >= stickynav ) {
-                $( '.nav-container' ).addClass('sticky');
-            }
-            else {
-                $( '.nav-container' ).removeClass('sticky');
-            }
-            didScroll = false;
-        }
-        
-        function scrollY() {
-            return window.pageYOffset || docElem.scrollTop;
-        }        
-        init();        
-    })();
-
+    });
 });
 
 
