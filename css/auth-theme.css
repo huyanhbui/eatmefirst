@@ -1,68 +1,95 @@
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Hanken+Grotesk:wght@400;500;600;700&family=Spline+Sans+Mono:wght@400;500;600&display=swap');
+
 /* =====================================================================
-   Modern "Save Food" reskin for the login / sign-up pages.
-   Layered on top of loginandsignup/css/style.css (loaded last) to replace
-   the festival look with a clean, green, modern card design.
+   Login / sign-up — "Kraft & Stamp" reskin.
+   Layered on top of loginandsignup/css/style.css (loaded last).
    ===================================================================== */
 
+:root {
+  --kale: #15281c;
+  --kale-2: #20392a;
+  --paper: #ebe7da;
+  --paper-2: #f5f2e9;
+  --kraft: #e3d3ad;
+  --signal: #df5e2b;
+  --signal-2: #c44d1f;
+  --ink: #1b2a20;
+  --muted: #5f5b4c;
+  --line: #d6cfbb;
+  --display: 'Bricolage Grotesque', 'Hanken Grotesk', system-ui, sans-serif;
+  --body: 'Hanken Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --mono: 'Spline Sans Mono', ui-monospace, Menlo, Consolas, monospace;
+  --stamp: 5px 5px 0 var(--kale);
+  --stamp-sm: 3px 3px 0 var(--kale);
+}
+
 body {
-  background: #14361f !important; /* dark green fallback if the photo is missing */
+  background: var(--kale) !important;
   padding: 56px 16px !important;
   min-height: 100vh;
-  font-family: 'Source Sans Pro', 'Montserrat', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
-  color: #243528 !important;
+  font-family: var(--body) !important;
+  color: var(--ink) !important;
   position: relative;
 }
-body::before { /* the photo, forced black and white */
+body::before { /* the photo, grayscale */
   content: "";
   position: fixed;
   inset: 0;
   z-index: -2;
   background: url("../images/login-bg.jpg") center / cover no-repeat;
-  filter: grayscale(1);
+  filter: grayscale(1) contrast(1.05);
 }
-body::after { /* soft dark green tint for readability and theme */
+body::after { /* deep kale tint for readability + theme */
   content: "";
   position: fixed;
   inset: 0;
   z-index: -1;
-  background: rgba(20, 54, 31, 0.55);
+  background: rgba(21, 40, 28, 0.62);
 }
-/* Let the photo show through the template's section wrappers */
 .main, .signup { background: transparent !important; }
 
 .container {
   width: 100% !important;
-  max-width: 440px !important;
+  max-width: 430px !important;
   margin: 0 auto !important;
 }
 
 /* ---- Card ---- */
 .signup-content {
-  background: #ffffff !important;
-  border: 1px solid #e6efe3 !important;
-  border-radius: 18px !important;
-  padding: 40px 38px !important;
-  box-shadow: 0 22px 50px rgba(27, 94, 32, 0.16), 0 2px 6px rgba(0, 0, 0, 0.05) !important;
+  background: var(--paper-2) !important;
+  border: 2px solid var(--kale) !important;
+  border-radius: 12px !important;
+  padding: 40px 36px !important;
+  box-shadow: var(--stamp) !important;
 }
 
-/* ---- Brand header (added in the markup) ---- */
+/* ---- Brand header ---- */
 .auth-brand {
-  display: flex; align-items: center; justify-content: center; gap: 8px;
-  font-weight: 700; font-size: 1.3rem; color: #1b5e20; margin-bottom: 4px;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  font-family: var(--display);
+  font-weight: 800; font-size: 1.4rem; letter-spacing: -0.03em;
+  color: var(--kale); margin-bottom: 6px;
 }
 .auth-mark {
-  width: 26px; height: 26px; border-radius: 8px;
-  background: linear-gradient(135deg, #4ade80 0%, #1b5e20 100%);
-  box-shadow: 0 4px 10px rgba(27, 94, 32, 0.35);
+  position: relative;
+  width: 28px; height: 28px; border-radius: 6px;
+  background: var(--kraft);
+  border: 2px solid var(--kale);
+  box-shadow: 2px 2px 0 var(--kale);
   display: inline-block;
+}
+.auth-mark::after {
+  content: ""; position: absolute; inset: 0; margin: auto;
+  width: 9px; height: 9px; background: var(--signal);
 }
 
 /* ---- Title / subtitle ---- */
 .form-title {
   text-align: center !important;
-  font-size: 1.0rem !important;
+  font-family: var(--body) !important;
+  font-size: 0.98rem !important;
   font-weight: 500 !important;
-  color: #6a7a6c !important;
+  color: var(--muted) !important;
   text-transform: none !important;
   letter-spacing: 0 !important;
   margin: 2px 0 26px !important;
@@ -72,21 +99,22 @@ body::after { /* soft dark green tint for readability and theme */
 .form-group { margin-bottom: 16px !important; position: relative !important; overflow: visible !important; }
 .form-input {
   width: 100% !important;
-  border: 1.5px solid #dbe5d8 !important;
-  border-radius: 12px !important;
+  border: 2px solid var(--line) !important;
+  border-radius: 7px !important;
   padding: 14px 44px 14px 16px !important;
   font-size: 15px !important;
-  color: #243528 !important;
-  background: #f7faf6 !important;
+  font-family: var(--body) !important;
+  color: var(--ink) !important;
+  background: var(--paper) !important;
   box-sizing: border-box !important;
-  transition: border-color .15s ease, box-shadow .15s ease, background .15s ease, transform .15s ease !important;
+  transition: border-color .15s ease, box-shadow .15s ease, background .15s ease !important;
 }
-.form-input::placeholder { color: #9aa89b !important; font-weight: 500 !important; }
+.form-input::placeholder { color: #9b9482 !important; font-weight: 500 !important; }
 .form-input:focus {
-  border: 1.5px solid #2e7d32 !important;
+  border: 2px solid var(--kale) !important;
   border-image: none !important;
-  background: #ffffff !important;
-  box-shadow: 0 0 0 4px rgba(46, 125, 50, 0.14) !important;
+  background: #fff !important;
+  box-shadow: var(--stamp-sm) !important;
   outline: none !important;
 }
 
@@ -94,41 +122,53 @@ body::after { /* soft dark green tint for readability and theme */
 .field-icon {
   position: absolute !important;
   right: 14px; top: 50%; transform: translateY(-50%);
-  color: #9bb09a !important; cursor: pointer; z-index: 2;
+  color: var(--muted) !important; cursor: pointer; z-index: 2;
 }
 
-/* ---- Submit button ---- */
+/* ---- Submit button (signal stamp) ---- */
 .form-submit {
   width: 100% !important;
-  border: none !important;
-  border-radius: 12px !important;
+  border: 2px solid var(--kale) !important;
+  border-radius: 7px !important;
   padding: 15px 20px !important;
   margin-top: 6px !important;
   color: #ffffff !important;
+  font-family: var(--body) !important;
   font-weight: 700 !important;
-  font-size: 14px !important;
-  letter-spacing: 0.03em !important;
-  text-transform: uppercase !important;
+  font-size: 15px !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
   cursor: pointer !important;
-  background-image: linear-gradient(135deg, #2e7d32 0%, #1b5e20 100%) !important;
-  box-shadow: 0 8px 18px rgba(27, 94, 32, 0.28) !important;
+  background: var(--signal) !important;
+  background-image: none !important;
+  box-shadow: var(--stamp) !important;
+  transition: transform .1s ease, box-shadow .1s ease, background .15s ease !important;
+}
+.form-submit:hover {
+  background: var(--signal-2) !important;
+  transform: translate(2px, 2px) !important;
+  box-shadow: 3px 3px 0 var(--kale) !important;
+}
+.form-submit:active {
+  transform: translate(5px, 5px) !important;
+  box-shadow: 0 0 0 var(--kale) !important;
 }
 
 /* ---- Helper links ---- */
 .loginhere, .loginhere2 {
   text-align: center !important;
-  color: #6a7a6c !important;
+  color: var(--muted) !important;
   font-size: 0.9rem !important;
   margin: 10px 0 0 !important;
 }
 .loginhere-link {
-  color: #2e7d32 !important;
+  color: var(--signal-2) !important;
   font-weight: 700 !important;
   text-decoration: none !important;
 }
-.loginhere-link:hover { color: #1b5e20 !important; text-decoration: underline !important; }
+.loginhere-link:hover { color: var(--signal) !important; text-decoration: underline !important; }
 
-/* ---- Declutter: hide the non-functional, icon-less social buttons ---- */
+/* ---- Declutter the template's empty social columns ---- */
 .signup-content .col { display: none !important; }
 
 /* ---- Small screens ---- */
@@ -140,23 +180,26 @@ body::after { /* soft dark green tint for readability and theme */
 /* ---- Social sign-in ---- */
 .auth-divider {
   display: flex; align-items: center; text-align: center;
-  color: #9aa89b; margin: 22px 0 16px; font-size: 0.85rem;
+  color: var(--muted); margin: 24px 0 16px; font-size: 0.78rem;
+  font-family: var(--mono); letter-spacing: 0.08em; text-transform: uppercase;
 }
 .auth-divider::before, .auth-divider::after {
-  content: ""; flex: 1; height: 1px; background: #e0e9dd;
+  content: ""; flex: 1; height: 2px; background: var(--line);
 }
 .auth-divider span { padding: 0 12px; }
 
 .social-auth { display: flex; gap: 12px; }
 .social-btn {
   flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px;
-  padding: 12px 10px; border-radius: 12px; border: 1.5px solid #dbe5d8;
-  background: #fff; color: #243528; font-weight: 700; font-size: 14px; cursor: pointer;
-  transition: border-color .15s ease, box-shadow .15s ease, transform .1s ease;
+  padding: 12px 10px; border-radius: 7px; border: 2px solid var(--kale);
+  background: var(--paper); color: var(--ink); font-weight: 700; font-size: 14px; cursor: pointer;
+  box-shadow: var(--stamp-sm);
+  transition: transform .1s ease, box-shadow .1s ease, background .15s ease;
 }
 .social-btn:hover {
-  border-color: #2e7d32; box-shadow: 0 6px 16px rgba(27, 94, 32, .14);
-  transform: translateY(-1px);
+  background: var(--kraft);
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--kale);
 }
 .social-btn i { font-size: 18px; }
 .social-btn.google i { color: #ea4335; }
