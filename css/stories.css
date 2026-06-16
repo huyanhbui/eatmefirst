@@ -1,31 +1,100 @@
-/* Stories section: a wall of personal quotes, distinct from the blog. */
-.stories-wrap { max-width: 1100px; margin: 0 auto; padding: 40px 20px 64px; }
-.stories-intro { text-align: center; margin-bottom: 36px; }
-.stories-intro h1 { color: #1b5e20; font-weight: 800; }
-.stories-intro p { color: #5b6b5e; font-size: 1.05rem; }
+/* Stories — a wall of first-hand accounts, styled as kraft index cards.
+   Inherits tokens (--kale, --kraft, --signal, --sprout, --mono, --display)
+   from food-theme.css, which loads before this file. */
+
+.stories-wrap { max-width: 1080px; margin: 0 auto; padding: 56px 20px 72px; }
+
+.stories-intro { text-align: center; margin-bottom: 44px; }
+.stories-intro::before {
+  content: "From the kitchen";
+  display: inline-block;
+  margin-bottom: 18px;
+  padding: 7px 14px;
+  transform: rotate(-3deg);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--kale);
+  background: var(--kraft);
+  border: 2px solid var(--kale);
+  border-radius: 4px;
+  box-shadow: 3px 3px 0 var(--kale);
+}
+.stories-intro h1 {
+  font-family: var(--display);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.03em;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  line-height: 0.98;
+  color: var(--kale);
+  margin: 0;
+}
+.stories-intro p {
+  color: var(--muted);
+  font-size: 1.1rem;
+  max-width: 540px;
+  margin: 14px auto 0;
+}
 
 .stories-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 24px;
+  gap: 26px;
 }
 @media (max-width: 768px) {
   .stories-grid { grid-template-columns: 1fr; }
 }
 
 .story-card {
-  background: #fff;
-  border: 1px solid #e6efe3;
-  border-radius: 16px;
-  padding: 24px;
-  box-shadow: 0 10px 26px rgba(27, 94, 32, 0.10);
+  position: relative;
+  background: var(--paper-2);
+  border: 2px solid var(--kale);
+  border-radius: 8px;
+  border-left: 8px solid var(--sprout);
+  padding: 24px 26px 26px;
+  box-shadow: 4px 4px 0 var(--kale);
 }
-.story-head { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
+/* a quiet "saved" stamp in the corner of every card */
+.story-card::after {
+  content: "SAVED";
+  position: absolute;
+  top: 18px; right: 20px;
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  color: var(--sprout);
+}
+
+.story-head { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; }
 .story-photo {
-  width: 64px; height: 64px; border-radius: 50%;
-  object-fit: cover; flex: none;
-  filter: grayscale(1);
+  width: 64px; height: 64px;
+  border-radius: 4px;            /* square ID-photo, not a generic circle */
+  object-fit: cover;
+  flex: none;
+  border: 2px solid var(--kale);
+  filter: grayscale(1) contrast(1.05);
 }
-.story-name { font-weight: 700; color: #243528; font-size: 1.05rem; }
-.story-country { color: #2e7d32; font-size: 0.9rem; }
-.story-text { color: #3a4a3c; line-height: 1.6; margin: 0; }
+.story-name {
+  font-family: var(--display);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  font-size: 1.2rem;
+  line-height: 1.1;
+}
+.story-country {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  color: var(--signal-2);
+  margin-top: 3px;
+}
+.story-text {
+  color: var(--ink);
+  line-height: 1.62;
+  margin: 0;
+  font-size: 1.0rem;
+}

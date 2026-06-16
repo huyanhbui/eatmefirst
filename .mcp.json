@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "code-review-graph": {
+      "command": "uvx",
+      "args": [
+        "--from",
+        "code-review-graph[embeddings]",
+        "code-review-graph",
+        "serve"
+      ],
+      "cwd": "E:\\code\\2082_pure_mix\\.claude\\worktrees\\silly-saha-58deef",
+      "type": "stdio"
+    }
+  }
+}

@@ -13,16 +13,31 @@
 	<link rel="stylesheet" href="css/food-theme.css">
 	<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,300' rel='stylesheet' type='text/css'>
 	<style>
-		.join-wrap { max-width: 640px; margin: 0 auto; padding: 48px 20px 64px; text-align: center; }
-		.join-wrap h1 { color: #1b5e20; font-weight: 800; }
-		.pledge { font-size: 1.25rem; color: #243528; line-height: 1.5; margin: 18px 0 24px; }
-		.join-count { font-size: 1.05rem; color: #2e7d32; font-weight: 700; margin-bottom: 24px; }
+		.join-wrap { max-width: 600px; margin: 0 auto; padding: 64px 20px 72px; text-align: center; }
+		.join-wrap h1 { font-family: var(--display); text-transform: uppercase; letter-spacing: -0.03em;
+			font-size: clamp(2.2rem, 6vw, 3.4rem); line-height: 0.98; color: var(--kale); margin: 0; }
+		.join-stamp { display: inline-block; margin-bottom: 22px; padding: 7px 14px; transform: rotate(-3deg);
+			font-family: var(--mono); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.16em;
+			color: var(--kale); background: var(--kraft); border: 2px solid var(--kale); border-radius: 4px;
+			box-shadow: 3px 3px 0 var(--kale); }
+		.pledge { font-family: var(--display); font-weight: 700; font-size: 1.5rem; line-height: 1.3;
+			letter-spacing: -0.02em; color: var(--ink); margin: 18px auto 18px; max-width: 460px; }
+		.join-count { font-family: var(--mono); font-size: 0.92rem; letter-spacing: 0.04em;
+			color: var(--signal-2); margin-bottom: 28px; }
+		.join-form { max-width: 380px; margin: 0 auto; text-align: left; }
 		.join-form input { display: block; width: 100%; margin: 0 0 14px; padding: 13px 16px;
-			border: 1.5px solid #dbe5d8; border-radius: 12px; font-size: 15px; box-sizing: border-box; }
-		.join-form button { width: 100%; border: none; border-radius: 12px; padding: 14px 20px;
-			color: #fff; font-weight: 700; text-transform: uppercase; letter-spacing: .03em; cursor: pointer;
-			background-image: linear-gradient(135deg, #2e7d32 0%, #1b5e20 100%); }
-		.join-thanks { display: none; color: #1b5e20; font-weight: 700; font-size: 1.15rem; margin-top: 8px; }
+			border: 2px solid var(--line); border-radius: 8px; font-size: 15px; box-sizing: border-box;
+			background: var(--paper-2); font-family: var(--body); color: var(--ink); }
+		.join-form input:focus { outline: none; border-color: var(--kale); background: #fff;
+			box-shadow: 3px 3px 0 var(--kale); }
+		.join-form button { width: 100%; border: 2px solid var(--kale); border-radius: 6px; padding: 14px 20px;
+			color: #fff; font-family: var(--body); font-weight: 700; font-size: 1rem; cursor: pointer;
+			background: var(--signal); box-shadow: 4px 4px 0 var(--kale);
+			transition: transform .1s ease, box-shadow .1s ease, background .15s; }
+		.join-form button:hover { background: var(--signal-2); transform: translate(2px, 2px);
+			box-shadow: 2px 2px 0 var(--kale); }
+		.join-thanks { display: none; font-family: var(--display); color: var(--sprout); font-weight: 700;
+			font-size: 1.2rem; margin-top: 8px; }
 	</style>
 </head>
 <body>
@@ -46,6 +61,7 @@
 	</div>
 
 	<main class="join-wrap">
+		<span class="join-stamp wow fadeIn">The pledge</span>
 		<h1 class="wow fadeIn">Join Us</h1>
 		<p class="pledge wow fadeInUp">"I pledge to waste less food and help feed more people."</p>
 		<p class="join-count" id="joinCount">Loading the count...</p>
@@ -73,22 +89,58 @@
 	<script src="js/custom.js"></script>
 
 	<script type="module">
-		import { db } from "./js/firebase-config.js";
-		import { ref, push, onValue } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
+		import { auth, db } from "./js/firebase-config.js";
+		import { ref, push, onValue, runTransaction } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
+		import { signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
 
-		const pledges = ref(db, "pledges");
+		const pledges = ref(db, "pledges");          // names + emails — never read on the client
+		const pledgeCount = ref(db, "pledgeCount");  // a single public integer — safe to read
 		const countEl = document.getElementById("joinCount");
 		const form = document.getElementById("joinForm");
 		const thanks = document.getElementById("joinThanks");
 		const submit = document.getElementById("joinSubmit");
 
-		// Live counter. Shows the number only, never the names or emails.
-		onValue(pledges, (snap) => {
-			const n = snap.numChildren();
-			countEl.textContent = n === 1 ? "1 person has joined" : n + " people have joined";
-		}, () => {
-			countEl.textContent = "";
+		let authReady = false;
+		let countShown = false;
+
+		const ANON_DISABLED_MSG =
+			"Pledges need anonymous sign-in, which isn't enabled yet. In the Firebase Console: Authentication → Sign-in method → Anonymous → Enable.";
+
+		// "Provider not enabled" surfaces under different codes on classic
+		// Firebase Auth vs Identity Platform — match all of them.
+		const isAnonDisabled = (code) =>
+			code === "auth/operation-not-allowed" ||
+			code === "auth/admin-restricted-operation" ||
+			code === "auth/configuration-not-found";
+
+		function setCount(text) { if (countEl) countEl.textContent = text; }
+
+		// The live count reads ONLY /pledgeCount — a single number, never the
+		// names or emails — so it can be public and exposes no personal data.
+		onValue(pledgeCount, (snap) => {
+			countShown = true;
+			const n = snap.val() || 0;
+			setCount(n === 1 ? "1 person has joined" : n + " people have joined");
+		}, (err) => {
+			countShown = true;
+			console.warn("[join] count read failed:", err);
+			setCount(""); // hide the line rather than show visitors an error
 		});
+
+		// Sign in anonymously so visitors can pledge — no account needed.
+		signInAnonymously(auth).catch((err) => {
+			console.error("[join] anonymous sign-in failed:", err);
+			if (isAnonDisabled((err && err.code) || "")) console.warn(ANON_DISABLED_MSG);
+		});
+		onAuthStateChanged(auth, (user) => { authReady = !!user; });
+
+		// Watchdog: if /pledgeCount never responds, just clear the placeholder.
+		setTimeout(() => {
+			if (!countShown && countEl && /loading/i.test(countEl.textContent)) {
+				console.warn("[join] count watchdog: /pledgeCount never responded");
+				setCount("");
+			}
+		}, 8000);
 
 		form.addEventListener("submit", async (e) => {
 			e.preventDefault();
@@ -98,14 +150,25 @@
 			submit.disabled = true;
 			submit.textContent = "Adding...";
 			try {
+				if (!authReady) await signInAnonymously(auth); // ensure a session before writing
 				await push(pledges, { name, email, ts: Date.now() });
+				// Bump the public counter (best-effort — the pledge is what matters).
+				runTransaction(pledgeCount, (cur) => (cur || 0) + 1)
+					.catch((err) => console.warn("[join] counter increment failed:", err));
 				form.style.display = "none";
 				thanks.style.display = "block";
 			} catch (err) {
 				submit.disabled = false;
 				submit.textContent = "Add my name";
-				alert("Something went wrong. Please try again.");
-				console.log(err);
+				const reason = (err && (err.message || err.code)) || "Unknown error";
+				if (err && isAnonDisabled(err.code)) {
+					alert(ANON_DISABLED_MSG);
+				} else if (err && err.code === "PERMISSION_DENIED") {
+					alert("Couldn't add your name: the database rejected the pledge (PERMISSION_DENIED). Your Realtime Database rules must allow signed-in users to write to /pledges.");
+				} else {
+					alert("Couldn't add your name — " + reason);
+				}
+				console.error("[join] pledge write failed:", err);
 			}
 		});
 	</script>
