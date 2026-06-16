@@ -1,3 +1,11 @@
+// Fade out the preloader once everything has loaded (matches the main site).
+window.addEventListener("load", function () {
+  var p = document.querySelector(".preloader");
+  if (!p) return;
+  p.classList.add("is-hidden");
+  setTimeout(function () { p.style.display = "none"; }, 600);
+});
+
 /* EatMeFirst v2 — per-user fridge tracker with AI photo/recipe + barcode lookup.
    - Logged in  -> data syncs to Firebase Realtime DB at fridge/<uid>
    - Guest      -> data stays in localStorage on this device

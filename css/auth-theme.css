@@ -5,12 +5,30 @@
    ===================================================================== */
 
 body {
-  background: linear-gradient(135deg, #eaf4e8 0%, #cfe6cb 55%, #bcdcb6 100%) !important;
+  background: #14361f !important; /* dark green fallback if the photo is missing */
   padding: 56px 16px !important;
   min-height: 100vh;
   font-family: 'Source Sans Pro', 'Montserrat', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
   color: #243528 !important;
+  position: relative;
 }
+body::before { /* the photo, forced black and white */
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background: url("../images/login-bg.jpg") center / cover no-repeat;
+  filter: grayscale(1);
+}
+body::after { /* soft dark green tint for readability and theme */
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: rgba(20, 54, 31, 0.55);
+}
+/* Let the photo show through the template's section wrappers */
+.main, .signup { background: transparent !important; }
 
 .container {
   width: 100% !important;

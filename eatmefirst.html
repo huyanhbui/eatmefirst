@@ -3,12 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>EatMeFirst — never waste food again</title>
+  <title>EatMeFirst: never waste food again</title>
   <meta name="description" content="Track what's in your fridge, see what to eat first, and stop throwing away food." />
   <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,300' rel='stylesheet' type='text/css' />
   <link rel="stylesheet" href="css/eatmefirst.css?v=2" />
 </head>
 <body>
+  <div class="preloader"><div class="sk-spinner sk-spinner-pulse"></div></div>
   <header class="topbar">
     <div class="brand">
       <span class="logo-mark" aria-hidden="true"></span>
@@ -32,7 +33,7 @@
   <main class="container">
     <!-- Sync banner -->
     <div id="syncBanner" class="sync-banner hidden">
-      You're browsing as a guest — items are saved on this device only.
+      You're browsing as a guest, items are saved on this device only.
       <a href="log in.html">Log in</a> to sync your fridge across devices.
     </div>
 
@@ -143,7 +144,7 @@
     <div class="modal">
       <h3>AI settings</h3>
       <p class="modal-note">
-        Photo recognition and recipe ideas use the Claude API. Paste your Anthropic API key below —
+        Photo recognition and recipe ideas use the Claude API. Paste your Anthropic API key below:
         it's stored <strong>only in this browser</strong> (localStorage) and sent directly to Anthropic,
         never to us. Best for personal/demo use; for a public app, proxy calls through your own server.
       </p>

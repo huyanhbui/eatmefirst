@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Join Us: Save Food</title>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/animate.min.css">
+	<link rel="stylesheet" href="css/font-awesome.min.css">
+	<link rel="stylesheet" href="css/ionicons.min.css">
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/food-theme.css">
+	<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,300' rel='stylesheet' type='text/css'>
+	<style>
+		.join-wrap { max-width: 640px; margin: 0 auto; padding: 48px 20px 64px; text-align: center; }
+		.join-wrap h1 { color: #1b5e20; font-weight: 800; }
+		.pledge { font-size: 1.25rem; color: #243528; line-height: 1.5; margin: 18px 0 24px; }
+		.join-count { font-size: 1.05rem; color: #2e7d32; font-weight: 700; margin-bottom: 24px; }
+		.join-form input { display: block; width: 100%; margin: 0 0 14px; padding: 13px 16px;
+			border: 1.5px solid #dbe5d8; border-radius: 12px; font-size: 15px; box-sizing: border-box; }
+		.join-form button { width: 100%; border: none; border-radius: 12px; padding: 14px 20px;
+			color: #fff; font-weight: 700; text-transform: uppercase; letter-spacing: .03em; cursor: pointer;
+			background-image: linear-gradient(135deg, #2e7d32 0%, #1b5e20 100%); }
+		.join-thanks { display: none; color: #1b5e20; font-weight: 700; font-size: 1.15rem; margin-top: 8px; }
+	</style>
+</head>
+<body>
+
+	<div class="preloader"><div class="sk-spinner sk-spinner-pulse"></div></div>
+
+	<div class="gh-nav-container">
+	   <div class="gh-nav-inner">
+	      <div class="gh-brand"><a href="index.html">Save Food</a></div>
+	      <nav class="gh-tab-bar" role="tablist">
+	         <a href="index.html" class="gh-tab-item">Home</a>
+	         <a href="about.html" class="gh-tab-item">About</a>
+	         <a href="blog.html" class="gh-tab-item">Blog</a>
+	         <a href="stories.html" class="gh-tab-item">Stories</a>
+	         <a href="join-us.html" class="gh-tab-item">Join Us</a>
+	         <a href="eatmefirst.html" class="gh-tab-item">EatMeFirst</a>
+	         <a href="donate.html" class="gh-tab-item">Donate</a>
+	         <a href="log in.html" class="gh-tab-item">login</a>
+	      </nav>
+	   </div>
+	</div>
+
+	<main class="join-wrap">
+		<h1 class="wow fadeIn">Join Us</h1>
+		<p class="pledge wow fadeInUp">"I pledge to waste less food and help feed more people."</p>
+		<p class="join-count" id="joinCount">Loading the count...</p>
+
+		<form class="join-form wow fadeInUp" id="joinForm">
+			<input type="text" id="joinName" placeholder="Your name" required>
+			<input type="email" id="joinEmail" placeholder="Your email" required>
+			<button type="submit" id="joinSubmit">Add my name</button>
+		</form>
+		<p class="join-thanks" id="joinThanks">Thank you for joining. Your name is in.</p>
+	</main>
+
+	<footer>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12 col-sm-12">
+					<p class="wow fadeInUp">Copyright 2024 Save Food. Together we waste less and feed more.</p>
+				</div>
+			</div>
+		</div>
+	</footer>
+
+	<script src="js/jquery.js"></script>
+	<script src="js/wow.min.js"></script>
+	<script src="js/custom.js"></script>
+
+	<script type="module">
+		import { db } from "./js/firebase-config.js";
+		import { ref, push, onValue } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
+
+		const pledges = ref(db, "pledges");
+		const countEl = document.getElementById("joinCount");
+		const form = document.getElementById("joinForm");
+		const thanks = document.getElementById("joinThanks");
+		const submit = document.getElementById("joinSubmit");
+
+		// Live counter. Shows the number only, never the names or emails.
+		onValue(pledges, (snap) => {
+			const n = snap.numChildren();
+			countEl.textContent = n === 1 ? "1 person has joined" : n + " people have joined";
+		}, () => {
+			countEl.textContent = "";
+		});
+
+		form.addEventListener("submit", async (e) => {
+			e.preventDefault();
+			const name = document.getElementById("joinName").value.trim();
+			const email = document.getElementById("joinEmail").value.trim();
+			if (!name || !email) return;
+			submit.disabled = true;
+			submit.textContent = "Adding...";
+			try {
+				await push(pledges, { name, email, ts: Date.now() });
+				form.style.display = "none";
+				thanks.style.display = "block";
+			} catch (err) {
+				submit.disabled = false;
+				submit.textContent = "Add my name";
+				alert("Something went wrong. Please try again.");
+				console.log(err);
+			}
+		});
+	</script>
+</body>
+</html>

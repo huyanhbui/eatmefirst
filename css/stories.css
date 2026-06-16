@@ -1,0 +1,31 @@
+/* Stories section: a wall of personal quotes, distinct from the blog. */
+.stories-wrap { max-width: 1100px; margin: 0 auto; padding: 40px 20px 64px; }
+.stories-intro { text-align: center; margin-bottom: 36px; }
+.stories-intro h1 { color: #1b5e20; font-weight: 800; }
+.stories-intro p { color: #5b6b5e; font-size: 1.05rem; }
+
+.stories-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+@media (max-width: 768px) {
+  .stories-grid { grid-template-columns: 1fr; }
+}
+
+.story-card {
+  background: #fff;
+  border: 1px solid #e6efe3;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 10px 26px rgba(27, 94, 32, 0.10);
+}
+.story-head { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
+.story-photo {
+  width: 64px; height: 64px; border-radius: 50%;
+  object-fit: cover; flex: none;
+  filter: grayscale(1);
+}
+.story-name { font-weight: 700; color: #243528; font-size: 1.05rem; }
+.story-country { color: #2e7d32; font-size: 0.9rem; }
+.story-text { color: #3a4a3c; line-height: 1.6; margin: 0; }
