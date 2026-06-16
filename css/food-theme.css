@@ -480,3 +480,25 @@ footer .social-icon li a:hover { background: var(--leaf); color: #fff !important
   .donate-amount { min-width: 44%; font-size: 1.1rem; padding: 16px; }
   .donate-amount.custom { min-width: 100%; }
 }
+
+/* Let the tab bar fill the row so the login button can sit on the far right */
+.gh-tab-bar { flex: 1 1 auto; }
+
+/* The login link, set apart on the right as a dark green button */
+.gh-tab-item[href="log in.html"] {
+  margin-left: auto;
+  align-self: center;
+  background: var(--leaf);
+  color: #fff !important;
+  border-radius: 999px;
+  padding: 8px 18px;
+  font-weight: 700;
+  text-transform: capitalize; /* shows "Login" from the lowercase text */
+}
+.gh-tab-item[href="log in.html"]:hover {
+  background: #14532d;
+  color: #fff !important;
+}
+.gh-tab-item[href="log in.html"].active {
+  border-bottom-color: transparent;
+}

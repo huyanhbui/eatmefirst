@@ -30,14 +30,14 @@
                 <div class="signup-content">
                     <div class="auth-brand"><span class="auth-mark"></span> Save Food</div>
                     <form method="POST" id="signup-form" class="signup-form">
-                        <h2 class="form-title">Welcome back — log in to your fridge</h2>
+                        <h2 class="form-title">Welcome back, log in to your fridge</h2>
                         
                         <div class="form-group">
                             <input type="email" class="form-input" name="email" id="emaill" placeholder="Your Email"/>
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-input" name="password" id="passwordd" placeholder="Password"/>
-                            <span toggle="#password" class="zmdi zmdi-eye field-icon toggle-password"></span>
+                            <input type="password" class="form-input" name="password" id="passwordd" placeholder="Password"/>
+                            <span toggle="#passwordd" class="zmdi zmdi-eye field-icon toggle-password"></span>
                         </div>
                         
                         
@@ -63,9 +63,7 @@
     </div>
 
     <!-- JS -->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="js/main.js"></script>
-    <script src="loginandsignup/js/sign_in.js"></script>
+    <script src="js/auth-password.js"></script>
 
     <!-- Firebase auth (shared config) -->
     <script type="module" src="js/auth-login.js"></script>
